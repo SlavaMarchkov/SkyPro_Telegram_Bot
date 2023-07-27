@@ -29,17 +29,26 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     @Override
     public int process(List<Update> updates) {
         updates.forEach(update -> {
-            Long chatId = update.message().chat().id();
-            String inputString = update.message().text();
-            String messageText = "Hello from Spring TG Bot!";
-            if (inputString.equals("/start")) {
-                SendMessage message = new SendMessage(chatId, messageText);
-                SendResponse response = telegramBot.execute(message);
-                logger.info("Response: {}", response.isOk());
-                logger.info("Error code: {}", response.errorCode());
+            if (update.message().text() != null) {
+                Long chatId = update.message().chat().id();
+                switch (update.message().text()) {
+                    case "/start":
+                        sendMessage("Привет, я таск-бот. Введи время и название задачи, и я пришлю тебе напоминалку", chatId);
+                        break;
+                    default:
+                        sendMessage("Что-то пошло не так...", chatId);
+                        break;
+                }
             }
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
+    }
+
+    private void sendMessage(final String text, final Long chatId) {
+        SendMessage message = new SendMessage(chatId, text);
+        SendResponse response = telegramBot.execute(message);
+        logger.info("Response: {}", response.isOk());
+        logger.info("Error code: {}", response.errorCode());
     }
 
 }
