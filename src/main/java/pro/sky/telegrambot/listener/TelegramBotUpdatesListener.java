@@ -67,7 +67,11 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
     public void sendNotifications() {
         LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         List<NotificationTask> notificationTaskList = service.getNotificationTasksByTaskTime(now);
-        notificationTaskList.forEach((notificationTask -> logger.info(notificationTask.toString())));
+        notificationTaskList.forEach((notificationTask -> {
+            Long chatId = notificationTask.getChatId();
+            String text = notificationTask.getTaskText();
+            sendMessage(text, chatId);
+        }));
     }
 
     private void sendMessage(final String text, final Long chatId) {
