@@ -1,4 +1,4 @@
-package pro.sky.telegrambot;
+package pro.sky.telegrambot.service;
 
 import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.entity.NotificationTask;
@@ -6,6 +6,7 @@ import pro.sky.telegrambot.repository.NotificationTaskRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 public class NotificationTaskService {
@@ -25,6 +26,10 @@ public class NotificationTaskService {
         task.setTaskText(text);
 
         return repository.save(task);
+    }
+
+    public List<NotificationTask> getNotificationTasksByTaskTime(LocalDateTime time) {
+        return repository.getNotificationTasksByTaskTime(time);
     }
 
 }
