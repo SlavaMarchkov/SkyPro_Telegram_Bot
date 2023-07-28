@@ -11,7 +11,7 @@ public class NotificationTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int chatId;
+    private Long chatId;
     private String taskText;
     private LocalDateTime taskTime;
 
@@ -23,11 +23,11 @@ public class NotificationTask {
         return id;
     }
 
-    public int getChatId() {
+    public Long getChatId() {
         return chatId;
     }
 
-    public void setChatId(final int chatId) {
+    public void setChatId(final Long chatId) {
         this.chatId = chatId;
     }
 
